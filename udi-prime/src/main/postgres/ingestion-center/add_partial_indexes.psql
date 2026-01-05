@@ -27,6 +27,10 @@ RAISE NOTICE 'Start adding partial index to table ';
           AND message IS NOT NULL
           AND message <> '';
     END IF;
+    RAISE NOTICE 'Partial index creation completed successfully.';
+            EXCEPTION
+                WHEN OTHERS THEN
+                    RAISE WARNING 'Error while creating partial indexes: %', SQLERRM;
 END;
 PERFORM pg_advisory_unlock(hashtext('partial_index'));
 END;
